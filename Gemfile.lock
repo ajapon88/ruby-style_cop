@@ -1,0 +1,22 @@
+PATH
+  remote: .
+  specs:
+    style_cop (0.1.0)
+      highline
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    highline (1.7.10)
+    rake (10.5.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.16)
+  rake (~> 10.0)
+  style_cop!
+
+BUNDLED WITH
+   1.16.1

@@ -1,3 +1,49 @@
 #!/usr/bin/env ruby
 
 require 'style_cop'
+require 'optparse'
+require 'rexml/document'
+require 'highline'
+
+options = {}
+output = nil
+opt = OptionParser.new do |opt|
+  opt.on('-s VAL', '--setting=VAL', '') { |v| options[:setting] = v }
+  opt.on('-f VAL', '--flags=VAL', '') { |v| options[:flags] = v }
+  opt.on('-c VAL', '--file=VAL', '') { |v| options[:file] = v }
+  opt.on('-p VAL', '--project=VAL', '') { |v| options[:project] = v }
+  opt.on('-s VAL', '--solution=VAL', '') { |v| options[:solution] = v }
+  opt.on('-o VAL', '--output=VAL', '') { |v| output = v }
+end
+opt.parse!(ARGV)
+stylecop_violations = StyleCop.stylecop(options)
+if output.nil?
+  h = HighLine.new
+  source_violations = stylecop_violations.group_by(&:source)
+  source_violations.each do |source, violations|
+    puts "File: #{source}"
+    violations.each do |violation|
+      puts h.color("Line #{violation.line_number}: [#{violation.rule_id}] #{violation.message}", :red)
+    end
+    print "Violations found: #{violations.length}\n\n"
+  end
+  puts "Files analyzed: #{source_violations.length}, Total violations: #{stylecop_violations.length}"
+else
+  doc = REXML::Document.new
+  root = REXML::Element.new('StyleCopViolations')
+  doc.add_element(root)
+  stylecop_violations.each do |violation|
+    node = REXML::Element.new('Violation')
+    violation.attributes.each do |k, v|
+      node.add_attribute(k, v)
+    end
+    node.add_text(violation.message)
+    root.add_element(node)
+  end
+  formatter = REXML::Formatters::Pretty.new
+  formatter.compact = true
+  formatter.width = 999_999
+  File.open(output, 'w') do |file|
+    formatter.write(doc, file)
+  end
+end
