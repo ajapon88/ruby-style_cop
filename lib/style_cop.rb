@@ -1,5 +1,6 @@
 require 'style_cop/version'
 require 'style_cop/violation'
+require 'rexml/document'
 require 'tempfile'
 
 module StyleCop
