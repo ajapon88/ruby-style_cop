@@ -4,9 +4,9 @@ require 'rexml/document'
 require 'tempfile'
 
 module StyleCop
-  def self.stylecop(setting: nil, flags: [], file: nil, project: nil, solution: nil)
+  def self.stylecop(settings: nil, flags: [], file: nil, project: nil, solution: nil)
     args = []
-    args.push("-set '#{setting}'") unless setting.nil?
+    args.push("-set '#{settings}'") unless settings.nil?
     args.push("-flags '#{flags.join(',')}'") unless flags
     args.push("-cs '#{file}'") unless file.nil?
     args.push("-proj '#{project}'") unless project.nil?
