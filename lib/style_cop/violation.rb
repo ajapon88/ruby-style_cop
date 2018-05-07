@@ -1,5 +1,6 @@
 module StyleCop
   class Violation
+    include Comparable
     attr_reader :end_column, :end_line, :line_number, :rule, :rule_id, :rule_namespace, :section, :source, :start_column, :start_line, :message
 
     def initialize(end_column: nil, end_line: nil, line_number: nil, rule: nil, rule_id: nil, rule_namespace: nil, section: nil, source: nil, start_column: nil, start_line: nil, message: nil)
@@ -62,6 +63,15 @@ module StyleCop
       hash ^= start_line.hash
       hash ^= message.hash
       hash
+    end
+
+    def <=>(other)
+      compare = 0
+      compare = source <=> other.source if compare == 0
+      compare = line_number <=> other.line_number if compare == 0
+      compare = rule_id <=> other.rule_id if compare == 0
+      compare = message <=> other.message if compare == 0
+      compare
     end
   end
 end

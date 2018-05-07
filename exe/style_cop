@@ -19,7 +19,7 @@ opt.parse!(ARGV)
 stylecop_violations = StyleCop.stylecop(options)
 if output.nil?
   h = HighLine.new
-  source_violations = stylecop_violations.group_by(&:source)
+  source_violations = stylecop_violations.sort.group_by(&:source)
   source_violations.each do |source, violations|
     puts "File: #{source}"
     violations.each do |violation|
