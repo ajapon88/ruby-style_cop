@@ -28,5 +28,40 @@ module StyleCop
         'StartColumn' => start_column,
         'StartLine' => start_line }
     end
+
+    def ==(other)
+      return false unless end_column == other.end_column
+      return false unless end_line == other.end_line
+      return false unless line_number == other.line_number
+      return false unless rule == other.rule
+      return false unless rule_id == other.rule_id
+      return false unless rule_namespace == other.rule_namespace
+      return false unless section == other.section
+      return false unless source == other.source
+      return false unless start_column == other.start_column
+      return false unless start_line == other.start_line
+      return false unless message == other.message
+      true
+    end
+
+    def eql?(other)
+      self == other
+    end
+
+    def hash
+      hash = 0
+      hash ^= end_column.hash
+      hash ^= end_line.hash
+      hash ^= line_number.hash
+      hash ^= rule.hash
+      hash ^= rule_id.hash
+      hash ^= rule_namespace.hash
+      hash ^= section.hash
+      hash ^= source.hash
+      hash ^= start_column.hash
+      hash ^= start_line.hash
+      hash ^= message.hash
+      hash
+    end
   end
 end
