@@ -3,22 +3,23 @@ module StyleCop
     include Comparable
     attr_reader :end_column, :end_line, :line_number, :rule, :rule_id, :rule_namespace, :section, :source, :start_column, :start_line, :message
 
-    def initialize(end_column: nil, end_line: nil, line_number: nil, rule: nil, rule_id: nil, rule_namespace: nil, section: nil, source: nil, start_column: nil, start_line: nil, message: nil)
-      @end_column = end_column
-      @end_line = end_line
-      @line_number = line_number
+    def initialize(section: nil, line_number: nil, start_line: nil, start_column: nil, end_line: nil, end_column: nil, source: nil, rule_namespace: nil, rule: nil, rule_id: nil, message: nil)
+      @section = section
+      @line_number = line_number.to_i
+      @start_line = start_line.to_i
+      @start_column = start_column.to_i
+      @end_line = end_line.to_i
+      @end_column = end_column.to_i
+      @source = source
+      @rule_namespace = rule_namespace
       @rule = rule
       @rule_id = rule_id
-      @rule_namespace = rule_namespace
-      @section = section
-      @source = source
-      @start_column = start_column
-      @start_line = start_line
       @message = message
     end
 
     def attributes
-      { 'EndColumn' => end_column,
+      {
+        'EndColumn' => end_column,
         'EndLine' => end_line,
         'LineNumber' => line_number,
         'Rule' => rule,
@@ -27,7 +28,8 @@ module StyleCop
         'Section' => section,
         'Source' => source,
         'StartColumn' => start_column,
-        'StartLine' => start_line }
+        'StartLine' => start_line
+      }
     end
 
     def ==(other)

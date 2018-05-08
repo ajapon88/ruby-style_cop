@@ -20,16 +20,16 @@ module StyleCop
       violations = []
       doc.elements.each('StyleCopViolations/Violation') do |violation|
         attributes = violation.attributes
-        violations.push(Violation.new(end_column: attributes['EndColumn'],
-                                      end_line: attributes['EndLine'],
+        violations.push(Violation.new(section: attributes['Section'],
                                       line_number: attributes['LineNumber'],
+                                      start_line: attributes['StartLine'],
+                                      start_column: attributes['StartColumn'],
+                                      end_line: attributes['EndLine'],
+                                      end_column: attributes['EndColumn'],
+                                      source: attributes['Source'],
+                                      rule_namespace: attributes['RuleNameSpace'],
                                       rule: attributes['Rule'],
                                       rule_id: attributes['RuleId'],
-                                      rule_namespace: attributes['RuleNameSpace'],
-                                      section: attributes['Section'],
-                                      source: attributes['Source'],
-                                      start_column: attributes['StartColumn'],
-                                      start_line: attributes['StartLine'],
                                       message: violation.text))
       end
       violations
