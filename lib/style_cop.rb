@@ -8,7 +8,7 @@ module StyleCop
     args = []
     settings = './Settings.StyleCop' if settings.nil? && File.exist?('./Settings.StyleCop')
     args.push("-set '#{settings}'") unless settings.nil?
-    args.push("-flags '#{flags.join(',')}'") unless flags
+    args.push("-flags '#{flags.join(',')}'") unless flags.nil? || flags.empty?
     args.push("-cs '#{file}'") unless file.nil?
     args.push("-proj '#{project}'") unless project.nil?
     args.push("-sln '#{solution}'") unless solution.nil?
