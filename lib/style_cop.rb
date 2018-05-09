@@ -6,6 +6,7 @@ require 'tempfile'
 module StyleCop
   def self.stylecop(settings: nil, flags: [], file: nil, project: nil, solution: nil)
     args = []
+    settings = './Settings.StyleCop' if settings.nil? && File.exist?('./Settings.StyleCop')
     args.push("-set '#{settings}'") unless settings.nil?
     args.push("-flags '#{flags.join(',')}'") unless flags
     args.push("-cs '#{file}'") unless file.nil?
